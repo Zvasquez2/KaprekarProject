@@ -13,7 +13,6 @@
  *   45<sup>2</sup> = 2025 
  * and 
  *   20 + 25 = 45. 
- * 
  * <p>See Wikipedia's  
  * <a href="https://en.wikipedia.org/wiki/Kaprekar_number">Kaprekar Number</a>
  * article for more information.</p>
@@ -23,32 +22,29 @@
  * <code>false</code> otherwise.
  */
 int isKaprekar(int n) {
-  int f = 0;
+	
+	if (n < 1) {
+		return 0;
+	}
+	  int i;
+	  long square = ((long)n * n);
+	  int numDigits = (int)(log10(square)) + 1;
+	  long modulus = 1;
+	  long first, second;
 
-  if (n < 1) {
-    return (f);
+	  //for each possible "split" of the square...
+	  for(i = 1; i <= numDigits; i++) {
+		  //increase the modulus by a factor of 10
+		  modulus *= 10;
+
+		  //split the square into two parts
+		  first = square / modulus;
+		  second = square % modulus;
+
+		  //test if the split makes a Kaprekar number
+		  if ((second > 0) && (first + second) == n) {
+			  return 1;
+		  }
+	  }
+	  return 0;
   }
-
-  int i;
-  long square = n * (long) n;
-  int numDigits = (int) log10(n) + 1;
-  long modulus = 0;
-  long first, second;
-
-  //for each possible "split" of the square...
-  for(i = 1; i <= numDigits; i++) {
-    //increase the modulus by a factor of 10
-    modulus *= 10;
-
-    //split the square into two parts
-    first = square / modulus;
-    second = square % modulus;
-
-    //test if the split makes a Kaprekar number
-    if(second > 0 && (first + second) == n) {
-      return 1;
-    }
-  }
-  return 0;
-  
-}
